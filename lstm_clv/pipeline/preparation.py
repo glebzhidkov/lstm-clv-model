@@ -98,6 +98,9 @@ class DataPreparationWorker:
         self.margins.save(self.paths.margins)
 
     def scale_data(self, transformation: str, outlier_threshold: int) -> None:
+        """
+        Step 3. Fit data scalers based on train data
+        """
         self.transactions_scaler = Scaler.fit_events_data(
             self.transactions_train,
             transformation=transformation,  # type: ignore
@@ -130,6 +133,7 @@ class DataPreparationWorker:
         _save_data: bool = True,
     ) -> DataForLstm:
         """
+        Step 4. Prepare input data for the LSTM-CLV model.
         This method can be used independently of previous steps.
         """
         self.__reload_data_if_needed(nr_test_weeks=nr_test_weeks)
